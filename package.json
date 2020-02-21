@@ -1,0 +1,25 @@
+{
+  "name": "parking-spot-finder-web",
+  "version": "1.0.0",
+  "description": "Web frontend for parking spot finder",
+  "main": "gulp",
+  "scripts": {
+    "webpackBundle" : "gulp webpackBundle",
+    "copyHtml" : "gulp copyHtml",
+    "compileStylesheets": "gulp compileStylesheets",
+    "clean" : "gulp clean",
+    "dev" : "gulp dev"
+  },
+  "author": "UTD",
+  "license": "ISC",
+  "dependencies": {
+    "@arcgis/webpack-plugin": "^4.14.1",
+    "del": "^5.1.0",
+    "esri-loader": "^2.13.0",
+    "gulp": "^4.0.2",
+    "gulp-sass": "^4.0.2",
+    "jquery": "^3.4.1",
+    "sass": "^1.25.0",
+    "webpack-stream": "^5.2.1"
+  }
+}

@@ -1,0 +1,54 @@
+@use "sass:color"
+
+$hover-darken-factor: -30%
+
+.sticker
+  width: 32px
+  height: 32px
+  display: inline-block
+  border-radius: 15%
+
+@mixin sticker-color($name, $color, $hoverable)
+  .sticker.#{$name}
+    background-color: $color
+    @if $hoverable
+      transition: background-color 0.5s
+      
+      &.hoverable:hover
+        background-color: #{color.adjust($color, $lightness: $hover-darken-factor)}
+        transition: background-color 0.2s
+
+@mixin sticker-image($name, $normal, $hover: false)
+  .sticker.#{$name}
+    background-image: $normal
+    @if $hover != false
+      transition: background-image 0.5s ease-in-out
+      
+      &.hoverable:hover
+        background-image: $hover
+        transition: background-image 0.2s ease-in-out
+
+@function stripe($angle, $first, $second, $width)
+  $hw: $width / 2
+  @return repeating-linear-gradient($angle, $first, $first $hw, $second $hw, $second $width)
+
+@mixin sticker-stripe($name, $angle, $first, $second, $width, $hoverable)
+  $dark-first: color.adjust($first, $lightness: $hover-darken-factor)
+  $dark-second: color.adjust($second, $lightness: $hover-darken-factor)
+  
+  $normal-stripe: stripe($angle, $first, $second, $width)
+  $hover-stripe: stripe($angle, $dark-first, $dark-second, $width)
+  
+  @if $hoverable
+    @include sticker-image($name, $normal-stripe, $hover-stripe)
+  @else
+    @include sticker-image($name, $normal-stripe)
+
+@include sticker-color("green", #00380a, false)
+@include sticker-color("gold", #ffdd00, false)
+@include sticker-color("orange", #ff571f, false)
+@include sticker-color("purple", #773dbc, false)
+@include sticker-stripe("apartments", 45deg, #cc292b, #FFFFFF, 10px, false)
+@include sticker-color("commons", #cc292b, false)
+@include sticker-color("handicap", #00a1de, false)
+@include sticker-color("none", #a6a6a6, false)
