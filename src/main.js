@@ -1,7 +1,13 @@
 'use strict';
 
-import { loadModules } from 'esri-loader';
+import './styles/main.sass';
+
+import { setDefaultOptions, loadModules } from 'esri-loader';
 import $ from 'jquery';
+
+setDefaultOptions({
+  css: true
+});
 
 loadModules(["esri/Map", "esri/views/MapView"])
   .then(([Map, MapView]) => {
@@ -18,6 +24,7 @@ loadModules(["esri/Map", "esri/views/MapView"])
     console.error(error);
   });
 
+/*
 var parkingPassType = "none";
 $(document).ready(function () {
   $('#parkingPassList ul li').mousedown(function(event) {
@@ -30,4 +37,4 @@ $(document).ready(function () {
   $('#parkingPassCurrent').mousedown(function(event) {
     $('#parkingPassList').toggleClass('hidden');
   });
-});
+});*/

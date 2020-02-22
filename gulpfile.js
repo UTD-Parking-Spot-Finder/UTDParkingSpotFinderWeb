@@ -14,21 +14,11 @@ function copyHtml() {
     .pipe(gulp.dest('./bin/'));
 };
 
-function compileStylesheets() {
-  const sass = require('gulp-sass');
-  sass.compiler = require('sass');
-  
-  return gulp.src('./src/styles/main.sass')
-    .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('./bin/'));
-};
-
 function clean() {
   return del('./bin/**');
 };
 
 exports.webpackBundle = webpackBundle;
 exports.copyHtml = copyHtml;
-exports.compileStylesheets = compileStylesheets;
 exports.clean = clean;
-exports.dev = gulp.parallel(webpackBundle, copyHtml, compileStylesheets);
+exports.dev = gulp.parallel(webpackBundle, copyHtml);
