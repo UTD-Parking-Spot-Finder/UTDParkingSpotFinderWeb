@@ -1,16 +1,16 @@
 const gulp = require('gulp');
 const del = require('del');
+const webpack = require('webpack-stream');
 
-function webpackBundle() {
-  const webpack = require('webpack-stream');
-  
+function dev() {
   return gulp.src('./src/main.js')
     .pipe(webpack(require('./webpack/webpack.config.dev.js')))
     .pipe(gulp.dest('./bin/'));
 };
 
-function copyHtml() {
-  return gulp.src('./src/index.html')
+function prod() {
+  return gulp.src('./src/main.js')
+    .pipe(webpack(require('./webpack/webpack.config.prod.js')))
     .pipe(gulp.dest('./bin/'));
 };
 
@@ -18,7 +18,7 @@ function clean() {
   return del('./bin/**');
 };
 
-exports.webpackBundle = webpackBundle;
-exports.copyHtml = copyHtml;
 exports.clean = clean;
-exports.dev = gulp.parallel(webpackBundle, copyHtml);
+exports.dev = dev;
+exports.prod = prod;
+exports.default = prod;

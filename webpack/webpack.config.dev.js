@@ -1,29 +1,7 @@
-const path = require('path');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WebpackCdnPlugin = require('webpack-cdn-plugin');
+const _ = require('lodash');
 
-const title = 'Parking Spot Finder';
+const common = require('./webpack.config.common.js');
 
-module.exports = {
-  mode : 'development',
-  entry : './src/main.js',
-  output : {
-    filename : 'main.js'
-  },
-  module : {
-    rules : [
-      {
-        test : /\.(css|sass)$/i,
-        use : [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
-      }
-    ]
-  },
-  plugins : [
-    new HtmlWebpackPlugin({
-      title: title,
-      template: './src/index.ejs'
-    }),
-    new MiniCssExtractPlugin()
-  ]
-};
+module.exports = _.merge({
+  mode : 'development'
+}, common);
