@@ -13,6 +13,10 @@
   "author": "UTD",
   "license": "ISC",
   "dependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
+    "babel-loader": "^8.0.6",
     "bootstrap": "^4.4.1",
     "css-loader": "^3.4.2",
     "del": "^5.1.0",

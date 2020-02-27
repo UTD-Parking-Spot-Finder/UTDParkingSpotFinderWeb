@@ -13,10 +13,18 @@ module.exports = {
   module : {
     rules : [
       {
+        test : /\.(js|jsx)$/,
+        exclude : /node_modules/,
+        use : ['babel-loader']
+      },
+      {
         test : /\.(css|sass)$/i,
         use : [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       }
     ]
+  },
+  resolve : {
+    extensions : ['*', '.js', '.jsx']
   },
   plugins : [
     new HtmlWebpackPlugin({
