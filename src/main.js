@@ -30,37 +30,58 @@ loadModules(["esri/Map", "esri/views/MapView"])
     console.error(error);
   });
 
-ReactDOM.render((
-  <div className="container-fluid">
-    <div className="row">
-      <div className="col-3">
-        <div className="container-fluid">
-          <div className="row">
-            <PassSelector />
+class Main extends React.Component
+{
+  constructor(props)
+  {
+    super(props);
+    this.state = {
+      currentPass : "none",
+      currentPreference : "greenHall"
+    };
+  }
+  
+  render()
+  {
+    const { currentPass, currentPreference } = this.state;
+    
+    return (
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-3">
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-12">
+                  <PassSelector currentPass={currentPass} onPassSelect={(x) => this.setState({currentPass : x})} />
+                </div>
+              </div>
+              <div className="row mt-2">
+                <div className="col-12 text-center border rounded">
+                  <small>Available Spots</small>
+                  <br />
+                  <span className="h1 font-weight-bold m-0">???</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="row">
-            <ParkingStatistics />
+          <div className="col-9">
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-12">
+                  <PreferencesSelector currentPreference={currentPreference} onPreferenceSelect={(x) => this.setState({currentPreference : x})} />
+                </div>
+              </div>
+              <div className="row mt-2">
+                <div className="col-4">
+                  <ParkingStatistics currentPass={currentPass} />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div className="col-9">
-        <PreferencesSelector />
-      </div>
-    </div>
-  </div>
-  ), document.getElementById("mapOverlay"));
+    );
+  }
+}
 
-/*
-var parkingPassType = "none";
-$(document).ready(function () {
-  $('#parkingPassList ul li').mousedown(function(event) {
-    const newPassType = $(this).attr('value');
-    $('#parkingPassCurrent .sticker').toggleClass(newPassType + ' ' + parkingPassType);
-    parkingPassType = newPassType;
-    $('#parkingPassList').addClass('hidden');
-  });
-
-  $('#parkingPassCurrent').mousedown(function(event) {
-    $('#parkingPassList').toggleClass('hidden');
-  });
-});*/
+ReactDOM.render(<Main />, document.getElementById("mapOverlay"));

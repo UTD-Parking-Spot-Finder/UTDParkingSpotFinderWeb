@@ -4,36 +4,33 @@ import ParkingPassType from './parkingPassType';
 
 class ParkingStatistics extends React.Component
 {
+  constructor(props)
+  {
+    super(props);
+  }
+  
   render()
   {
+    const { currentPass } = this.props;
+    
     return (
-      <table className="table table-sm">
-        <thead>
-          <tr>
-            <th>
-              <small>Compatible Parking Spots</small>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <span className={"sticker sm purple"}></span>
-              <small>???</small>
-            </td>
-          </tr>
+      <div className="container-fluid border rounded">
+        <div className="row">
+          <div className="col-12">
+            <small>Compatible Parking Spots</small>
+          </div>
+        </div>
+        <div className="row">
           {
-            ParkingPassType["purple"].compatiblePasses.map(x => (
-              <tr key={x}>
-                <td>
-                  <span className={"sticker sm " + x}></span>
-                  <small>???</small>
-                </td>
-              </tr>
+            ParkingPassType[currentPass].compatiblePasses.map(x => (
+              <div className="col-6" key={x}>
+                <span className={"sticker sm " + x}></span>
+                <small className="ml-1">???</small>
+              </div>
             ))
           }
-        </tbody>
-      </table>
+        </div>
+      </div>
     );
   }
 }

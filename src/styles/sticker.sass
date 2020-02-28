@@ -5,12 +5,16 @@ $hover-darken-factor: -30%
 .sticker
   width: 1.5rem
   height: 1.5rem
+  min-width: 1.5rem
+  min-height: 1.5rem
   display: inline-block
   border-radius: 15%
 
 .sticker.sm
   width: 0.75rem
   height: 0.75rem
+  min-width: 0.75rem
+  min-height: 0.75rem
 
 @mixin sticker-color($name, $color, $hoverable)
   .sticker.#{$name}
