@@ -23,7 +23,7 @@
     "esri-loader": "^2.13.0",
     "gulp": "^4.0.2",
     "html-webpack-plugin": "^3.2.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "lodash": "^4.17.15",
     "mini-css-extract-plugin": "^0.9.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
