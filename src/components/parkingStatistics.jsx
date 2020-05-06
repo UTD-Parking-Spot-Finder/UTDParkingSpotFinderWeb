@@ -11,10 +11,10 @@ class ParkingStatistics extends React.Component
   
   render()
   {
-    const { currentPass } = this.props;
+    const { currentPass, stats } = this.props;
     
     return (
-      <div className="container-fluid border rounded">
+      <div className="container-fluid text-center">
         <div className="row">
           <div className="col-12">
             <small>Compatible Parking Spots</small>
@@ -23,9 +23,9 @@ class ParkingStatistics extends React.Component
         <div className="row">
           {
             ParkingPassType[currentPass].compatiblePasses.map(x => (
-              <div className="col-6" key={x}>
+              <div className="text-left col-3" key={x}>
                 <span className={"sticker sm " + x}></span>
-                <small className="ml-1">???</small>
+                <small className="ml-1">{stats === null ? "???" : stats[ParkingPassType[x].name] === undefined ? 0 : stats[ParkingPassType[x].name]}</small>
               </div>
             ))
           }

@@ -17,7 +17,7 @@ class PassSelector extends React.Component
       <Dropdown>
         <Dropdown.Toggle id="passSelector" className="container-fluid h-100 w-100 d-flex align-items-center">
           <span className={"sticker " + currentPass}></span>
-          <span className="ml-1">{ParkingPassType[currentPass].name}</span>
+          <span className="ml-1 d-none d-lg-block">{ParkingPassType[currentPass].name}</span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
           {

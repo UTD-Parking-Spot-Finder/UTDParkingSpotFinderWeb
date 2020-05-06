@@ -2,6 +2,11 @@ const gulp = require('gulp');
 const del = require('del');
 const webpack = require('webpack-stream');
 
+function copyData() {
+  return gulp.src("./data/*")
+    .pipe(gulp.dest("./bin/"));
+}
+
 function dev() {
   return gulp.src('./src/main.js')
     .pipe(webpack(require('./webpack/webpack.config.dev.js')))
@@ -19,6 +24,7 @@ function clean() {
 };
 
 exports.clean = clean;
-exports.dev = dev;
-exports.prod = prod;
+exports.copyData = copyData;
+exports.dev = gulp.parallel(copyData, dev);
+exports.prod = gulp.parallel(copyData, prod);
 exports.default = prod;
