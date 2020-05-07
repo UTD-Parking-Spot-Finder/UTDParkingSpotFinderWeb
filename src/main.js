@@ -23,8 +23,10 @@ Object.values(ParkingPassType).forEach((x) => {
   };
 });
 
+
 setDefaultOptions({
-  css: true
+  css: true,
+  url: "https://js.arcgis.com/4.9/"
 });
 
 var pass = "none";
@@ -33,61 +35,61 @@ var reload = null;
 
 loadModules(["esri/Map", "esri/views/MapView", "esri/layers/GraphicsLayer", "esri/Graphic"])
   .then(([Map, MapView, GraphicsLayer, Graphic]) => {
-    var map = new Map({
-      basemap: "streets-vector"
-    });
-    var view = new MapView({
-      container: "mapDiv",
-      map: map,
-      center: [-96.749893, 32.985431],
-      zoom: 16
-    });
-
-    var layer = new GraphicsLayer({});
-    
-    map.add(layer);
-    
-    var layout = undefined;
-
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-      if(this.readyState === 4 && this.status === 200) {
-        layout = {};
-        JSON.parse(xhr.responseText).forEach((x) => {
-          layout[x.id] = new Graphic({
-            geometry: {
-              type: "point",
-              longitude: x.longitude,
-              latitude: x.latitude
-            },
-            symbol: names2Colors[x.type] || names2Colors["None"]
-          });
-        });
-        
-        function reloadStatus() {
-          var statusXhr = new XMLHttpRequest();
-          statusXhr.onreadystatechange = function() {
-            if(statusXhr.readyState === 4 && statusXhr.status === 200) {
-              var freeSpots = JSON.parse(statusXhr.responseText).slice(0, 50);
-              layer.removeAll();
-              layer.addMany(freeSpots.map((x) => layout[x]));
-            }
-          };
-          statusXhr.open("GET", "./api/status.php?prefer=" + preference + "&type=" + ParkingPassType[pass].compatiblePasses.map((x) => ParkingPassType[x].name).join(","), true);
-          statusXhr.send();
-        }
-        
-        reload = reloadStatus;
-        
-        reloadStatus();
-        setInterval(reloadStatus, refreshTime);
-      }
-    };
-    xhr.open("GET", "./api/layout.php", true);
-    xhr.send();
-  }).catch(error => {
-    console.error(error);
+  var map = new Map({
+    basemap: "streets-vector"
   });
+  var view = new MapView({
+    container: "mapDiv",
+    map: map,
+    center: [-96.749893, 32.985431],
+    zoom: 16
+  });
+
+  var layer = new GraphicsLayer({});
+  
+  map.add(layer);
+  
+  var layout = undefined;
+
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if(this.readyState === 4 && this.status === 200) {
+      layout = {};
+      JSON.parse(xhr.responseText).forEach((x) => {
+        layout[x.id] = new Graphic({
+          geometry: {
+            type: "point",
+            longitude: x.longitude,
+            latitude: x.latitude
+          },
+          symbol: names2Colors[x.type] || names2Colors["None"]
+        });
+      });
+      
+      function reloadStatus() {
+        var statusXhr = new XMLHttpRequest();
+        statusXhr.onreadystatechange = function() {
+          if(statusXhr.readyState === 4 && statusXhr.status === 200) {
+            var freeSpots = JSON.parse(statusXhr.responseText).slice(0, 50);
+            layer.removeAll();
+            layer.addMany(freeSpots.map((x) => layout[x]));
+          }
+        };
+        statusXhr.open("GET", "./api/status.php?prefer=" + preference + "&type=" + ParkingPassType[pass].compatiblePasses.map((x) => ParkingPassType[x].name).join(","), true);
+        statusXhr.send();
+      }
+      
+      reload = reloadStatus;
+      
+      reloadStatus();
+      setInterval(reloadStatus, refreshTime);
+    }
+  };
+  xhr.open("GET", "./api/layout.php", true);
+  xhr.send();
+}).catch(error => {
+  console.error(error);
+});
 
 class Main extends React.Component
 {
