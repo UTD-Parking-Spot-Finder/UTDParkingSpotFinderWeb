@@ -150,7 +150,7 @@ class Main extends React.Component
                 <div className="col-12 text-center border rounded">
                   <small>Available Spots (Only first 50 shown)</small>
                   <br />
-                  <span className="h1 font-weight-bold m-0">{stats === null ? "???" : Object.values(stats).reduce((x, y) => x + y, 0)}</span>
+                  <span className="display-1 font-weight-bold m-0">{stats === null ? "???" : Object.values(stats).reduce((x, y) => x + y, 0)}</span>
                 </div>
               </div>
               <div className="row mt-1">
